@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adhikaar — Know Your Rights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101d33;
+    --ink-2:#182a4a;
+    --paper:#f3ede0;
+    --gold:#d9a441;
+    --gold-dim:#a97f34;
+    --sage:#7a9b76;
+    --line:rgba(243,237,224,0.16);
+    --line-strong:rgba(243,237,224,0.32);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* subtle paper-grain texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(243,237,224,0.035) 1px, transparent 0);
+    background-size:22px 22px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  header{
+    position:relative; z-index:1;
+    padding:28px clamp(20px,5vw,64px) 18px;
+    display:flex; align-items:baseline; justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap; gap:10px;
+  }
+  .brand{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:22px;
+    letter-spacing:0.01em;
+  }
+  .brand span{color:var(--gold);}
+  nav{font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(243,237,224,0.55);}
+
+  main{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,64px);}
+
+  /* HERO */
+  .hero{
+    padding:clamp(48px,8vw,86px) 0 clamp(36px,6vw,56px);
+    border-bottom:1px solid var(--line);
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:end;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(38px,5.6vw,64px);
+    line-height:1.02;
+    margin:0 0 20px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:italic; color:var(--gold); font-weight:600;}
+  .hero p{
+    font-size:16px; line-height:1.6; color:rgba(243,237,224,0.72);
+    max-width:46ch; margin:0;
+  }
+  .hero-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px; line-height:1.7; color:rgba(243,237,224,0.5);
+    border-left:1px solid var(--line-strong);
+    padding-left:18px;
+  }
+
+  /* CASE FILE / MAIN TOOL */
+  .tool{
+    padding:clamp(40px,6vw,64px) 0;
+    display:grid; grid-template-columns:1fr 1fr; gap:40px;
+    border-bottom:1px solid var(--line);
+  }
+  @media (max-width:860px){ .tool{grid-template-columns:1fr;} .hero{grid-template-columns:1fr;} }
+
+  .panel-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:rgba(243,237,224,0.5);
+    margin-bottom:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .panel-label::before{content:"";width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block;}
+
+  .category-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace; font-size:12px;
+    padding:7px 13px; border:1px solid var(--line-strong); border-radius:100px;
+    cursor:pointer; background:transparent; color:rgba(243,237,224,0.7);
+    transition:all .15s ease;
+  }
+  .chip.active{background:var(--gold); color:var(--ink); border-color:var(--gold); font-weight:500;}
+  .chip:hover:not(.active){border-color:var(--gold-dim); color:var(--paper);}
+
+  textarea{
+    width:100%; min-height:130px;
+    background:var(--ink-2);
+    border:1px solid var(--line-strong);
+    color:var(--paper);
+    border-radius:4px;
+    padding:16px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:15px; line-height:1.55;
+    resize:vertical;
+    outline:none;
+  }
+  textarea::placeholder{color:rgba(243,237,224,0.35);}
+  textarea:focus{border-color:var(--gold);}
+
+  .examples{margin-top:12px; font-size:12.5px; color:rgba(243,237,224,0.45);}
+  .examples button{
+    background:none; border:none; color:var(--gold); cursor:pointer;
+    text-decoration:underline; text-underline-offset:3px; font-size:12.5px;
+    padding:0; margin-right:14px; font-family:'IBM Plex Sans',sans-serif;
+  }
+
+  .submit-btn{
+    margin-top:18px;
+    background:var(--gold); color:var(--ink);
+    border:none; padding:14px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
+    font-weight:600; cursor:pointer;
+    transition:transform .12s ease, background .12s ease;
+  }
+  .submit-btn:hover{background:#e8b555; transform:translateY(-1px);}
+  .submit-btn:active{transform:translateY(0);}
+
+  /* RESULT / CASE FILE OUTPUT */
+  .case-file{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:4px;
+    padding:0;
+    min-height:130px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+  .case-file-empty{
+    padding:40px 28px; color:rgba(16,29,51,0.4);
+    font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.7;
+    display:flex; flex-direction:column; gap:6px; min-height:130px; justify-content:center;
+  }
+  .case-file-header{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:22px 26px 16px;
+    border-bottom:1.5px dashed rgba(16,29,51,0.25);
+  }
+  .case-id{font-family:'IBM Plex Mono',monospace; font-size:11px; color:rgba(16,29,51,0.5); letter-spacing:0.06em;}
+  .stamp{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700;
+    letter-spacing:0.1em; color:var(--sage);
+    border:1.5px solid var(--sage); border-radius:100px;
+    padding:5px 12px; transform:rotate(-3deg);
+    opacity:0; animation:stampIn .4s ease .35s forwards;
+  }
+  @keyframes stampIn{
+    0%{opacity:0; transform:rotate(-3deg) scale(1.6);}
+    60%{opacity:1;}
+    100%{opacity:1; transform:rotate(-3deg) scale(1);}
+  }
+  .case-body{padding:22px 26px 26px;}
+  .case-title{font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin:0 0 4px;}
+  .case-law{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gold-dim); margin-bottom:16px;}
+  .case-section-label{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em;
+    color:rgba(16,29,51,0.45); margin:16px 0 8px;
+  }
+  .case-section-label:first-of-type{margin-top:0;}
+  .case-body p, .case-body li{font-size:14.5px; line-height:1.65; color:rgba(16,29,51,0.85);}
+  .case-body ul{margin:0; padding-left:20px;}
+  .case-body li{margin-bottom:6px;}
+  .gen-note{margin-top:20px; font-size:11.5px; color:rgba(16,29,51,0.4); border-top:1px solid rgba(16,29,51,0.12); padding-top:12px;}
+
+  /* RTI SECTION */
+  .rti{padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--line);}
+  .rti-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:26px;}
+  @media (max-width:860px){.rti-grid{grid-template-columns:1fr;}}
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+    letter-spacing:0.08em; text-transform:uppercase; color:rgba(243,237,224,0.55); margin-bottom:7px;
+  }
+  .field input, .field textarea{
+    width:100%; background:var(--ink-2); border:1px solid var(--line-strong);
+    color:var(--paper); border-radius:4px; padding:12px 14px;
+    font-family:'IBM Plex Sans',sans-serif; font-size:14.5px; outline:none;
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--gold);}
+  .rti-output{
+    background:var(--paper); color:var(--ink); border-radius:4px;
+    padding:28px 26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
+    line-height:1.75; white-space:pre-wrap; min-height:280px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  }
+  .download-btn{
+    margin-top:14px; background:transparent; color:var(--gold); border:1px solid var(--gold-dim);
+    padding:10px 18px; border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:12px;
+    letter-spacing:0.05em; cursor:pointer;
+  }
+  .download-btn:hover{background:rgba(217,164,65,0.1);}
+
+  footer{
+    padding:28px clamp(20px,5vw,64px) 40px;
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:rgba(243,237,224,0.35);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Adhikaar<span>.</span></div>
+  <nav>Tenant · Consumer · RTI — Plain Language Rights Navigator</nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Civic &amp; Legal Empowerment — Demo Build</div>
+      <h1>Aapka masla,<br><em>aapki bhasha</em>, aapke rights.</h1>
+      <p>Type your problem the way you'd say it to a friend. No legal jargon needed — we match it to the relevant Indian law and tell you exactly what to do next.</p>
+    </div>
+    <div class="hero-note">
+      Works fully offline. No external APIs, no live data feeds — everything below runs from a static rights knowledge base loaded directly in this page.
+    </div>
+  </section>
+
+  <section class="tool">
+    <div>
+      <div class="panel-label">Describe your problem</div>
+      <div class="category-row" id="categoryRow">
+        <button class="chip active" data-cat="all">All</button>
+        <button class="chip" data-cat="tenant">Tenant</button>
+        <button class="chip" data-cat="consumer">Consumer</button>
+        <button class="chip" data-cat="rti">RTI / Govt Info</button>
+        <button class="chip" data-cat="workplace">Workplace</button>
+        <button class="chip" data-cat="police">Police / FIR</button>
+        <button class="chip" data-cat="property">Property / Land</button>
+      </div>
+      <textarea id="queryInput" placeholder="e.g. Mera landlord security deposit wapas nahi de raha hai, 2 mahine ho gaye..."></textarea>
+      <div class="examples">
+        Try:
+        <button data-ex="Landlord is not returning my security deposit even after 2 months of vacating">Deposit not returned</button>
+        <button data-ex="I received an eviction notice with no proper reason or notice period">Sudden eviction</button>
+        <button data-ex="I bought a phone online and it arrived damaged, seller refuses refund">Damaged product, no refund</button>
+        <button data-ex="I want to know why my ration card application was rejected by the government office">RTI on rejected application</button>
+      </div>
+      <button class="submit-btn" id="submitBtn">Find My Rights →</button>
+    </div>
+
+    <div>
+      <div class="panel-label">Your case file</div>
+      <div class="case-file" id="caseFile">
+        <div class="case-file-empty">
+          <span>◌ Waiting for input</span>
+          <span>Your matched rights, relevant law, and next steps will appear here as a case file.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rti">
+    <div class="panel-label">Draft an RTI application</div>
+    <div style="font-size:15px; color:rgba(243,237,224,0.7); max-width:60ch; margin-top:6px;">
+      Fill in the basics in plain language — we'll format it into a proper RTI application under Section 6(1) of the RTI Act, 2005, ready to submit or download.
+    </div>
+    <div class="rti-grid">
+      <div>
+        <div class="field">
+          <label>Department / Public Authority</label>
+          <input id="rtiDept" type="text" placeholder="e.g. Municipal Corporation of Mathura">
+        </div>
+        <div class="field">
+          <label>Your name</label>
+          <input id="rtiName" type="text" placeholder="e.g. Rohit Sharma">
+        </div>
+        <div class="field">
+          <label>Your address</label>
+          <input id="rtiAddress" type="text" placeholder="e.g. 12, Krishna Nagar, Mathura, UP - 281001">
+        </div>
+        <div class="field">
+          <label>What do you want to know? (plain language)</label>
+          <textarea id="rtiQuestion" rows="4" placeholder="e.g. Why was my ration card application rejected and what is the current status of it?"></textarea>
+        </div>
+        <button class="submit-btn" id="rtiBtn">Generate Application</button>
+      </div>
+      <div>
+        <div class="rti-output" id="rtiOutput">Your formatted RTI application will appear here once you fill the form and click Generate.</div>
+        <button class="download-btn" id="rtiDownload">↓ Download as .txt</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Adhikaar — student demo project. Not a substitute for professional legal advice.</span>
+  <span>Knowledge base: Tenant law (model act) · Consumer Protection Act 2019 · RTI Act 2005 · Shops &amp; Establishments Act</span>
+</footer>
+
+<script>
+// ---------- STATIC KNOWLEDGE BASE (no APIs) ----------
+const KB = [
+  {
+    cat:"tenant",
+    keywords:["deposit","security deposit","advance","not returning","refund deposit","vacate","vacated",
+      "paisa","paise","paisa wapas","paise wapas","paisa nahi de","paise nahi de","paisa nahi diya","paise nahi diya",
+      "wapas nahi","nahi de raha","nahi de rha","nahi laut","advance wapas","deposit wapas","landlord paise","makan malik paise"],
+    title:"Security Deposit Not Returned",
+    law:"Model Tenancy Act, 2021 — Sec. 10 · State Rent Control Acts",
+    facts:[
+      "Landlords are generally required to refund the security deposit within 1–2 months of you vacating (varies by state), after deducting only for actual damages beyond normal wear and tear.",
+      "Withholding the full deposit without an itemised reason is not permitted under most state rent control frameworks."
+    ],
+    steps:[
+      "Send a written refund request (email or registered post) with the vacating date, as proof of formal demand.",
+      "If ignored for 15–30 days, file a complaint with your local Rent Authority / Rent Control Court.",
+      "Keep the original rent agreement and move-out photos — these are your strongest evidence.",
+      "For amounts under ₹20 lakh in dispute, Consumer Court can also be an option depending on the state."
+    ]
+  },
+  {
+    cat:"tenant",
+    keywords:["eviction","evict","no notice","kicked out","landlord asking to leave","forced to vacate",
+      "ghar khali karo","makan khali","nikal raha","nikal rha","zabardasti khali","bina notice","ghar se nikal",
+      "khali karne","khali karwa","makan malik ghar","ghar khali karwa"],
+    title:"Eviction Without Proper Notice",
+    law:"Model Tenancy Act, 2021 — Sec. 21 · State Rent Control Acts",
+    facts:[
+      "A landlord cannot forcibly evict a tenant without following due legal process — this includes a written notice period as specified in your rent agreement (commonly 1 month, but varies).",
+      "Eviction generally requires a valid ground (non-payment, misuse of property, landlord's own need, etc.) and often a court/Rent Authority order if the tenant contests it."
+    ],
+    steps:[
+      "Do not vacate immediately under pressure — ask for the eviction notice in writing.",
+      "Check your rent agreement for the agreed notice period and grounds for termination.",
+      "If there's no valid notice or ground, you can approach the Rent Authority or file for an injunction in civil court.",
+      "Illegal lockouts or utility disconnection to force eviction can themselves be reported to police."
+    ]
+  },
+  {
+    cat:"tenant",
+    keywords:["repair","not fixing","leakage","broken","maintenance not done","landlord refuses repair",
+      "theek nahi kara","marammat nahi","paani tapak","pipe kharab","bijli kharab","repair nahi kara rha"],
+    title:"Landlord Not Carrying Out Repairs",
+    law:"Model Tenancy Act, 2021 — Sec. 13 (Repairs &amp; Maintenance)",
+    facts:[
+      "Structural repairs (roof, plumbing, electrical wiring) are typically the landlord's responsibility, while minor day-to-day upkeep is usually the tenant's, unless the agreement states otherwise."
+    ],
+    steps:[
+      "Send a written repair request with photos and a reasonable deadline.",
+      "If unresolved, you may (depending on your agreement) get the repair done and deduct reasonable cost from rent — document everything.",
+      "Escalate to the Rent Authority if the issue affects habitability and is ignored."
+    ]
+  },
+  {
+    cat:"consumer",
+    keywords:["refund","damaged product","defective","seller refuses","online purchase","faulty","warranty",
+      "paisa wapas nahi","refund nahi de raha","product kharab","saman kharab","dukandar paisa","paise wapas nahi kar raha"],
+    title:"Defective Product / Refund Refused",
+    law:"Consumer Protection Act, 2019 — Sec. 2(47), Sec. 35",
+    facts:[
+      "Selling a defective or damaged product without informing the buyer, or refusing a reasonable refund/replacement/repair, counts as an 'unfair trade practice' or 'deficiency in service'.",
+      "E-commerce platforms are also directly accountable under the Consumer Protection (E-Commerce) Rules, 2020."
+    ],
+    steps:[
+      "Raise a formal complaint with the seller/platform in writing, keep order ID, photos, and chat/email records.",
+      "If unresolved in 30 days, file a complaint on the National Consumer Helpline (1915 / consumerhelpline.gov.in) or e-daakhil portal.",
+      "For claims up to ₹1 crore, District Consumer Disputes Redressal Commission is the right forum — filing is low-cost and doesn't need a lawyer."
+    ]
+  },
+  {
+    cat:"consumer",
+    keywords:["overcharged","fake product","misleading ad","false claim","billing issue","wrong bill"],
+    title:"Overcharging / Misleading Claims",
+    law:"Consumer Protection Act, 2019 — Sec. 2(28) 'Unfair Trade Practice'",
+    facts:[
+      "Charging above MRP, hidden charges not disclosed upfront, and false/misleading advertising are all prohibited."
+    ],
+    steps:[
+      "Collect the bill/receipt and any advertisement or listing showing the discrepancy.",
+      "File a complaint via the National Consumer Helpline (1915) — many issues are resolved through mediation without going to court.",
+      "For persistent violations, complaints can also be sent to the Central Consumer Protection Authority (CCPA)."
+    ]
+  },
+  {
+    cat:"rti",
+    keywords:["rti","right to information","application rejected","government office","scheme status","ration card","government record"],
+    title:"Getting Information From a Government Office",
+    law:"Right to Information Act, 2005 — Sec. 6(1)",
+    facts:[
+      "Any citizen can request information from a 'public authority' (government department, PSU, government-funded body) by submitting a simple written application.",
+      "The department is legally required to respond within 30 days (48 hours if it concerns life or liberty)."
+    ],
+    steps:[
+      "Identify the correct Public Information Officer (PIO) for the department — use the RTI form below to generate your application.",
+      "Submit with the prescribed fee (usually ₹10, waived for BPL applicants) via post, in person, or the RTI Online Portal for central bodies.",
+      "If no response in 30 days, or you're unsatisfied, file a First Appeal with the department's Appellate Authority within 30 days.",
+      "If still unresolved, escalate to the State/Central Information Commission."
+    ]
+  },
+  {
+    cat:"police",
+    keywords:["robbery","robbed","chori","theft","stolen","police report","file fir","fir kaise","police complaint",
+      "chori ho gaya","luta","lut gaya","dacoity","snatched","chain snatching","mobile chori","police nahi sun rahi",
+      "police report kaise karein","report police","chori ki report"],
+    title:"Reporting a Robbery / Theft to Police",
+    law:"Code of Criminal Procedure (CrPC), Sec. 154 · Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023",
+    facts:[
+      "Robbery and theft are cognizable offences — the police are legally required to register a First Information Report (FIR) and cannot refuse without valid reason.",
+      "You have the right to a free copy of the FIR immediately after it is registered."
+    ],
+    steps:[
+      "Go to the police station with jurisdiction over where the incident happened (or any station — a 'Zero FIR' can be transferred later).",
+      "Give a clear, written account: what was stolen/taken, when, where, and any description of the person(s) involved.",
+      "Insist on the FIR being registered on the spot — under Sec. 154 CrPC, refusal to register a cognizable offence is itself punishable.",
+      "If the police refuse, you can (a) approach the Superintendent of Police in writing, or (b) file a complaint directly with a Magistrate under Sec. 156(3) CrPC, or (c) use the online FIR portal available in most states.",
+      "Keep the FIR copy and reference number — needed for insurance claims, replacement documents, or further investigation follow-up."
+    ]
+  },
+  {
+    cat:"police",
+    keywords:["harassment by police","police nahi madad","police complaint against","custody","police brutality","wrongful arrest"],
+    title:"Complaint Against Police Misconduct",
+    law:"Police Act, 1861 (state amendments) · Art. 21, Constitution of India",
+    facts:[
+      "Citizens can file a complaint against police misconduct with the State Human Rights Commission or the Police Complaints Authority set up in most states."
+    ],
+    steps:[
+      "Document the incident with date, officer details (if known), and any witnesses.",
+      "File a written complaint with the Superintendent of Police or the district's Police Complaints Authority.",
+      "If unresolved, escalate to the State Human Rights Commission or National Human Rights Commission (nhrc.nic.in)."
+    ]
+  },
+  {
+    cat:"property",
+    keywords:["kabza","zameen par kabza","zameen","jameen","encroachment","illegal possession","land grab",
+      "kabza kar liya","kabza ho gaya","property dispute","unauthorized possession","zameen hadap","plot par kabza",
+      "jamin par kabza","kisi ne kabza","neighbour kabza","padosi kabza","zameen kabza ho gya","zameen kabza ho gaya"],
+    title:"Illegal Possession / Encroachment on Your Land",
+    law:"Specific Relief Act, 1963 — Sec. 6 · Bharatiya Nyaya Sanhita (BNS), 2023 — Sec. 329 (Criminal Trespass)",
+    facts:[
+      "If someone takes possession of your land/property without your consent, you can recover possession through a civil suit — and if you act within 6 months of dispossession, Sec. 6 of the Specific Relief Act lets you get an order based on prior possession alone, without proving ownership.",
+      "Forceful or unauthorized entry onto your property is also a criminal offence (criminal trespass) and can be reported to police separately from the civil case."
+    ],
+    steps:[
+      "Gather proof of your ownership/possession — sale deed, mutation records (revenue records), property tax receipts, electricity bill, or witness statements.",
+      "If the encroachment is recent (within 6 months), file a suit for recovery of possession under Sec. 6, Specific Relief Act — this is faster since you only need to prove you were in possession before, not full ownership.",
+      "In parallel, file a police complaint / FIR for criminal trespass if the possession was forceful or without your consent.",
+      "For longer-standing disputes, you may need a full title suit in civil court — consult a property lawyer, as this can take longer.",
+      "Get the land record (Khasra/Khatauni or equivalent) updated and verified at the local Tehsil/Revenue office to strengthen your claim."
+    ]
+  },
+  {
+    cat:"workplace",
+    keywords:["salary not paid","unpaid wages","fired without notice","workplace harassment","termination",
+      "salary nahi de raha","tankhwah nahi","paisa nahi de raha company","naukri se nikal diya","bina notice nikal"],
+    title:"Unpaid Wages / Wrongful Termination",
+    law:"Payment of Wages Act, 1936 · Industrial Disputes Act, 1947",
+    facts:[
+      "Employers are legally required to pay wages on time; withholding wages without valid cause is punishable.",
+      "Termination without notice or due process (for employees covered under applicable labour laws) can be challenged."
+    ],
+    steps:[
+      "Keep salary slips, appointment letter, and any written communication about non-payment or termination.",
+      "File a complaint with the Labour Commissioner's office in your state — this is free and doesn't require a lawyer.",
+      "For organised sector disputes, the Industrial Tribunal / Labour Court is the next step if conciliation fails."
+    ]
+  }
+];
+
+let activeCat = "all";
+
+document.getElementById('categoryRow').addEventListener('click', (e)=>{
+  if(e.target.classList.contains('chip')){
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    e.target.classList.add('active');
+    activeCat = e.target.dataset.cat;
+  }
+});
+
+document.querySelectorAll('.examples button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.getElementById('queryInput').value = btn.dataset.ex;
+  });
+});
+
+function normalize(str){
+  return str.toLowerCase()
+    .replace(/\bnhi\b/g, "nahi")
+    .replace(/\brha\b/g, "raha")
+    .replace(/\bnhii\b/g, "nahi")
+    .replace(/\bpaiseh?\b/g, "paise")
+    .replace(/\bpese\b/g, "paise")
+    .replace(/\bkr\b/g, "kar")
+    .replace(/\bkro\b/g, "karo");
+}
+
+function matchQuery(query){
+  const q = normalize(query);
+  let best = null, bestScore = 0;
+  KB.forEach(entry=>{
+    if(activeCat !== "all" && entry.cat !== activeCat) return;
+    let score = 0;
+    entry.keywords.forEach(k=>{
+      const nk = normalize(k);
+      if(q.includes(nk)) score += nk.split(" ").length; // longer phrase matches score higher
+    });
+    // fallback: single strong-word overlap (helps short casual queries)
+    if(score === 0){
+      const qWords = q.split(/\s+/);
+      entry.keywords.forEach(k=>{
+        const nk = normalize(k);
+        if(nk.split(" ").length === 1 && qWords.includes(nk)) score += 0.5;
+      });
+    }
+    if(score > bestScore){ bestScore = score; best = entry; }
+  });
+  return bestScore > 0 ? best : null;
+}
+
+function renderResult(entry, query){
+  const el = document.getElementById('caseFile');
+  if(!entry){
+    el.innerHTML = `<div class="case-file-empty" style="color:rgba(16,29,51,0.55);">
+      <span>◌ No confident match found</span>
+      <span>Try adding more detail — e.g. mention "deposit", "eviction", "refund", "RTI", or select a category filter above.</span>
+    </div>`;
+    return;
+  }
+  const caseId = "AK-" + Math.floor(1000 + Math.random()*9000);
+  el.innerHTML = `
+    <div class="case-file-header">
+      <div class="case-id">CASE FILE / ${caseId}</div>
+      <div class="stamp">RIGHTS MATCHED</div>
+    </div>
+    <div class="case-body">
+      <div class="case-title">${entry.title}</div>
+      <div class="case-law">${entry.law}</div>
+      <div class="case-section-label">What this means</div>
+      <ul>${entry.facts.map(f=>`<li>${f}</li>`).join("")}</ul>
+      <div class="case-section-label">What you can do</div>
+      <ul>${entry.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
+      <div class="gen-note">Generated from a static rights knowledge base — verify current fees/timelines on the relevant state portal before filing. This is guidance, not legal advice.</div>
+    </div>
+  `;
+}
+
+document.getElementById('submitBtn').addEventListener('click', ()=>{
+  const query = document.getElementById('queryInput').value.trim();
+  if(!query){
+    document.getElementById('queryInput').focus();
+    return;
+  }
+  const match = matchQuery(query);
+  renderResult(match, query);
+});
+
+document.getElementById('queryInput').addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && e.ctrlKey){ document.getElementById('submitBtn').click(); }
+});
+
+// ---------- RTI GENERATOR ----------
+document.getElementById('rtiBtn').addEventListener('click', ()=>{
+  const dept = document.getElementById('rtiDept').value.trim() || "[Department / Public Authority]";
+  const name = document.getElementById('rtiName').value.trim() || "[Your Name]";
+  const address = document.getElementById('rtiAddress').value.trim() || "[Your Address]";
+  const question = document.getElementById('rtiQuestion').value.trim() || "[Your question here]";
+  const today = new Date().toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'});
+
+  const draft =
+`To,
+The Public Information Officer,
+${dept}
+
+Subject: Application under Section 6(1) of the Right to Information Act, 2005
+
+Sir/Madam,
+
+I, ${name}, residing at ${address}, wish to seek the following information under the Right to Information Act, 2005:
+
+1. ${question}
+
+I request that the above information be provided to me within the statutory period of 30 days as prescribed under Section 7(1) of the RTI Act, 2005.
+
+I am enclosing the prescribed application fee of Rs. 10/- (or proof of BPL status for fee exemption, if applicable).
+
+Please send the response to the address mentioned above.
+
+Thanking you,
+
+Yours faithfully,
+${name}
+Date: ${today}
+Place: __________________`;
+
+  document.getElementById('rtiOutput').textContent = draft;
+});
+
+document.getElementById('rtiDownload').addEventListener('click', ()=>{
+  const text = document.getElementById('rtiOutput').textContent;
+  if(!text || text.startsWith("Your formatted")) return;
+  const blob = new Blob([text], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'RTI_Application.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+</script>
+
+</body>
+</html>
