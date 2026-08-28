@@ -3,328 +3,643 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adhikaar — Know Your Rights</title>
+<meta name="description" content="Adhikaar helps people understand everyday rights in plain language and create RTI applications.">
+<meta name="theme-color" content="#f7f8f5">
+<title>Adhikaar — Know Your Rights, Know Your Next Step</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --ink:#101d33;
-    --ink-2:#182a4a;
-    --paper:#f3ede0;
-    --gold:#d9a441;
-    --gold-dim:#a97f34;
-    --sage:#7a9b76;
-    --line:rgba(243,237,224,0.16);
-    --line-strong:rgba(243,237,224,0.32);
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--ink);
-    color:var(--paper);
-    font-family:'IBM Plex Sans',sans-serif;
-    min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;}
+:root{
+  --bg:#f7f8f5;
+  --surface:#ffffff;
+  --surface-2:#f0f3ed;
+  --ink:#14251f;
+  --muted:#60706a;
+  --muted-2:#85918c;
+  --line:#dfe5df;
+  --brand:#176b55;
+  --brand-dark:#0e4d3e;
+  --brand-soft:#e2f0ea;
+  --accent:#e7a62a;
+  --accent-soft:#fff2d8;
+  --danger:#b84b45;
+  --shadow:0 18px 50px rgba(20,37,31,.09);
+  --shadow-sm:0 8px 24px rgba(20,37,31,.07);
+  --radius:20px;
+  --radius-sm:13px;
+  --max:1180px;
+}
 
-  /* subtle paper-grain texture */
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background-image:radial-gradient(circle at 1px 1px, rgba(243,237,224,0.035) 1px, transparent 0);
-    background-size:22px 22px;
-    pointer-events:none;
-    z-index:0;
-  }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 80% -10%, rgba(23,107,85,.10), transparent 32rem),
+    radial-gradient(circle at -10% 35%, rgba(231,166,42,.08), transparent 25rem),
+    var(--bg);
+  color:var(--ink);
+  font-family:"DM Sans",sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(23,107,85,.20);
+  outline-offset:2px;
+}
+a{color:inherit;text-decoration:none}
 
-  header{
-    position:relative; z-index:1;
-    padding:28px clamp(20px,5vw,64px) 18px;
-    display:flex; align-items:baseline; justify-content:space-between;
-    border-bottom:1px solid var(--line);
-    flex-wrap:wrap; gap:10px;
-  }
-  .brand{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    font-size:22px;
-    letter-spacing:0.01em;
-  }
-  .brand span{color:var(--gold);}
-  nav{font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:rgba(243,237,224,0.55);}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(247,248,245,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(223,229,223,.8);
+}
+.nav{
+  width:min(var(--max),calc(100% - 40px));
+  margin:auto;
+  min-height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  font-family:Manrope,sans-serif;font-weight:800;font-size:20px;
+  letter-spacing:-.04em;
+}
+.logo{
+  width:38px;height:38px;border-radius:12px;
+  display:grid;place-items:center;
+  color:white;background:var(--brand);
+  box-shadow:0 7px 18px rgba(23,107,85,.22);
+}
+.logo::before{content:"A";font-weight:800}
+.brand-dot{color:var(--accent)}
+.nav-links{display:flex;gap:24px;color:var(--muted);font-size:14px;font-weight:600}
+.nav-links a:hover{color:var(--brand)}
+.nav-cta{
+  border:1px solid var(--line);background:var(--surface);
+  padding:9px 14px;border-radius:10px;font-weight:700;font-size:13px;
+}
+.nav-cta:hover{border-color:var(--brand);color:var(--brand)}
 
-  main{position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,64px);}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
 
-  /* HERO */
-  .hero{
-    padding:clamp(48px,8vw,86px) 0 clamp(36px,6vw,56px);
-    border-bottom:1px solid var(--line);
-    display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:end;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:18px;
-  }
-  h1{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:clamp(38px,5.6vw,64px);
-    line-height:1.02;
-    margin:0 0 20px;
-    letter-spacing:-0.01em;
-  }
-  h1 em{font-style:italic; color:var(--gold); font-weight:600;}
-  .hero p{
-    font-size:16px; line-height:1.6; color:rgba(243,237,224,0.72);
-    max-width:46ch; margin:0;
-  }
-  .hero-note{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:12.5px; line-height:1.7; color:rgba(243,237,224,0.5);
-    border-left:1px solid var(--line-strong);
-    padding-left:18px;
-  }
+.hero{
+  padding:76px 0 54px;
+  display:grid;grid-template-columns:1.08fr .92fr;gap:70px;align-items:center;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--brand);background:var(--brand-soft);
+  border:1px solid #cce4da;border-radius:999px;
+  padding:7px 11px;font-size:12px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.eyebrow::before{content:"✦";color:var(--accent)}
+.hero h1{
+  margin:18px 0 18px;
+  font:800 clamp(42px,6vw,72px)/1.02 Manrope,sans-serif;
+  letter-spacing:-.065em;
+  max-width:780px;
+}
+.hero h1 span{color:var(--brand)}
+.hero-copy{font-size:18px;color:var(--muted);max-width:650px}
+.hero-proof{
+  display:flex;flex-wrap:wrap;gap:18px;margin-top:27px;
+  color:var(--muted);font-size:13px;font-weight:600;
+}
+.hero-proof span{display:flex;align-items:center;gap:7px}
+.hero-proof b{color:var(--brand)}
 
-  /* CASE FILE / MAIN TOOL */
-  .tool{
-    padding:clamp(40px,6vw,64px) 0;
-    display:grid; grid-template-columns:1fr 1fr; gap:40px;
-    border-bottom:1px solid var(--line);
-  }
-  @media (max-width:860px){ .tool{grid-template-columns:1fr;} .hero{grid-template-columns:1fr;} }
+.hero-visual{
+  min-height:350px;position:relative;
+  display:grid;place-items:center;
+}
+.hero-orbit{
+  width:min(100%,390px);aspect-ratio:1;
+  border:1px solid #d9e3dc;border-radius:50%;
+  background:radial-gradient(circle,#fff 0 38%,#edf5f0 39% 61%,transparent 62%);
+  box-shadow:var(--shadow);
+  position:relative;animation:float 6s ease-in-out infinite;
+}
+.orbit-center{
+  position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);
+  width:126px;height:126px;border-radius:34px;
+  background:var(--brand);color:white;display:grid;place-items:center;
+  box-shadow:0 22px 45px rgba(23,107,85,.28);
+  font:800 34px Manrope,sans-serif;
+}
+.float-card{
+  position:absolute;background:white;border:1px solid var(--line);
+  box-shadow:var(--shadow-sm);border-radius:16px;padding:13px 15px;
+  font-size:12px;font-weight:700;display:flex;align-items:center;gap:9px;
+  animation:float 5s ease-in-out infinite;
+}
+.float-card strong{font-size:18px}
+.fc1{top:6%;left:-2%}.fc2{top:50%;right:-5%;animation-delay:-1.3s}.fc3{bottom:4%;left:8%;animation-delay:-2.4s}
 
-  .panel-label{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase;
-    color:rgba(243,237,224,0.5);
-    margin-bottom:14px;
-    display:flex; align-items:center; gap:8px;
-  }
-  .panel-label::before{content:"";width:6px;height:6px;background:var(--gold);border-radius:50%;display:inline-block;}
+.section{padding:34px 0 74px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:23px}
+.section-head h2{margin:0;font:800 29px/1.1 Manrope,sans-serif;letter-spacing:-.04em}
+.section-head p{margin:7px 0 0;color:var(--muted);font-size:14px}
+.section-link{color:var(--brand);font-size:13px;font-weight:800}
 
-  .category-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
-  .chip{
-    font-family:'IBM Plex Mono',monospace; font-size:12px;
-    padding:7px 13px; border:1px solid var(--line-strong); border-radius:100px;
-    cursor:pointer; background:transparent; color:rgba(243,237,224,0.7);
-    transition:all .15s ease;
-  }
-  .chip.active{background:var(--gold); color:var(--ink); border-color:var(--gold); font-weight:500;}
-  .chip:hover:not(.active){border-color:var(--gold-dim); color:var(--paper);}
+.topic-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.topic-card{
+  border:1px solid var(--line);background:rgba(255,255,255,.78);
+  border-radius:16px;padding:17px 14px;text-align:left;
+  min-height:118px;transition:.2s ease;
+}
+.topic-card:hover{transform:translateY(-4px);border-color:#b9d5ca;box-shadow:var(--shadow-sm);background:white}
+.topic-icon{
+  width:39px;height:39px;border-radius:12px;background:var(--surface-2);
+  display:grid;place-items:center;font-size:18px;margin-bottom:14px;
+}
+.topic-card strong{display:block;font-size:13px;line-height:1.25}
+.topic-card small{display:block;color:var(--muted-2);font-size:11px;margin-top:5px}
 
-  textarea{
-    width:100%; min-height:130px;
-    background:var(--ink-2);
-    border:1px solid var(--line-strong);
-    color:var(--paper);
-    border-radius:4px;
-    padding:16px;
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:15px; line-height:1.55;
-    resize:vertical;
-    outline:none;
-  }
-  textarea::placeholder{color:rgba(243,237,224,0.35);}
-  textarea:focus{border-color:var(--gold);}
+.tool-wrap{
+  padding:0 0 78px;
+}
+.tool{
+  display:grid;grid-template-columns:.92fr 1.08fr;gap:22px;
+  align-items:start;
+}
+.search-card,.result-card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow-sm);
+}
+.search-card{padding:27px}
+.card-top{display:flex;justify-content:space-between;gap:15px;align-items:start;margin-bottom:20px}
+.card-title{margin:0;font:800 21px Manrope,sans-serif;letter-spacing:-.035em}
+.card-sub{margin:5px 0 0;color:var(--muted);font-size:13px}
+.status-pill{
+  padding:6px 9px;border-radius:999px;background:#f3f6f3;
+  color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;white-space:nowrap;
+}
 
-  .examples{margin-top:12px; font-size:12.5px; color:rgba(243,237,224,0.45);}
-  .examples button{
-    background:none; border:none; color:var(--gold); cursor:pointer;
-    text-decoration:underline; text-underline-offset:3px; font-size:12.5px;
-    padding:0; margin-right:14px; font-family:'IBM Plex Sans',sans-serif;
-  }
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{
+  border:1px solid var(--line);background:#fbfcfb;color:var(--muted);
+  padding:8px 11px;border-radius:999px;font-size:12px;font-weight:700;
+  transition:.18s ease;
+}
+.chip:hover{border-color:#a8cdbf;color:var(--brand)}
+.chip.active{background:var(--brand);border-color:var(--brand);color:white;box-shadow:0 5px 15px rgba(23,107,85,.16)}
 
-  .submit-btn{
-    margin-top:18px;
-    background:var(--gold); color:var(--ink);
-    border:none; padding:14px 26px; border-radius:3px;
-    font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;
-    font-weight:600; cursor:pointer;
-    transition:transform .12s ease, background .12s ease;
-  }
-  .submit-btn:hover{background:#e8b555; transform:translateY(-1px);}
-  .submit-btn:active{transform:translateY(0);}
+.search-box{
+  border:1.5px solid var(--line);border-radius:17px;background:#fbfcfb;
+  transition:.2s ease;overflow:hidden;
+}
+.search-box:focus-within,.search-box.focused{border-color:#82b7a5;box-shadow:0 0 0 4px rgba(23,107,85,.07)}
+.search-box textarea{
+  width:100%;min-height:148px;border:0;outline:0;background:transparent;
+  resize:vertical;padding:17px 17px 10px;color:var(--ink);font-size:15px;line-height:1.6;
+}
+.search-box textarea::placeholder{color:#98a39e}
+.search-footer{display:flex;align-items:center;justify-content:space-between;padding:9px 12px 12px 17px}
+.search-meta{font-size:11px;color:var(--muted-2)}
+.clear-btn{border:0;background:none;color:var(--muted);font-size:12px;font-weight:700;padding:5px}
+.clear-btn:hover{color:var(--brand)}
+.search-actions{margin-top:14px;display:flex;align-items:center;gap:12px}
+.primary-btn{
+  flex:1;border:0;background:var(--brand);color:white;border-radius:13px;
+  padding:13px 17px;font-weight:800;font-size:14px;
+  box-shadow:0 10px 24px rgba(23,107,85,.18);
+  transition:.18s ease;display:flex;align-items:center;justify-content:center;gap:9px;
+}
+.primary-btn:hover{background:var(--brand-dark);transform:translateY(-1px)}
+.primary-btn:active{transform:translateY(0)}
+.primary-btn.loading{opacity:.78;pointer-events:none}
+.btn-arrow{font-size:18px;line-height:0}
+.keyboard{font-size:10px;color:var(--muted-2);white-space:nowrap}
 
-  /* RESULT / CASE FILE OUTPUT */
-  .case-file{
-    background:var(--paper);
-    color:var(--ink);
-    border-radius:4px;
-    padding:0;
-    min-height:130px;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 20px 50px rgba(0,0,0,0.35);
-  }
-  .case-file-empty{
-    padding:40px 28px; color:rgba(16,29,51,0.4);
-    font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.7;
-    display:flex; flex-direction:column; gap:6px; min-height:130px; justify-content:center;
-  }
-  .case-file-header{
-    display:flex; justify-content:space-between; align-items:flex-start;
-    padding:22px 26px 16px;
-    border-bottom:1.5px dashed rgba(16,29,51,0.25);
-  }
-  .case-id{font-family:'IBM Plex Mono',monospace; font-size:11px; color:rgba(16,29,51,0.5); letter-spacing:0.06em;}
-  .stamp{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700;
-    letter-spacing:0.1em; color:var(--sage);
-    border:1.5px solid var(--sage); border-radius:100px;
-    padding:5px 12px; transform:rotate(-3deg);
-    opacity:0; animation:stampIn .4s ease .35s forwards;
-  }
-  @keyframes stampIn{
-    0%{opacity:0; transform:rotate(-3deg) scale(1.6);}
-    60%{opacity:1;}
-    100%{opacity:1; transform:rotate(-3deg) scale(1);}
-  }
-  .case-body{padding:22px 26px 26px;}
-  .case-title{font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin:0 0 4px;}
-  .case-law{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--gold-dim); margin-bottom:16px;}
-  .case-section-label{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em;
-    color:rgba(16,29,51,0.45); margin:16px 0 8px;
-  }
-  .case-section-label:first-of-type{margin-top:0;}
-  .case-body p, .case-body li{font-size:14.5px; line-height:1.65; color:rgba(16,29,51,0.85);}
-  .case-body ul{margin:0; padding-left:20px;}
-  .case-body li{margin-bottom:6px;}
-  .gen-note{margin-top:20px; font-size:11.5px; color:rgba(16,29,51,0.4); border-top:1px solid rgba(16,29,51,0.12); padding-top:12px;}
+.examples{margin-top:18px}
+.examples-label{font-size:11px;font-weight:800;color:var(--muted);margin-bottom:9px}
+.example-list{display:flex;flex-wrap:wrap;gap:7px}
+.example-btn{
+  border:1px dashed #cbd4cf;background:white;border-radius:9px;
+  padding:7px 9px;color:var(--muted);font-size:11px;text-align:left;
+}
+.example-btn:hover{border-color:#94baa9;color:var(--brand);background:#f6faf8}
 
-  /* RTI SECTION */
-  .rti{padding:clamp(40px,6vw,64px) 0; border-bottom:1px solid var(--line);}
-  .rti-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:26px;}
-  @media (max-width:860px){.rti-grid{grid-template-columns:1fr;}}
-  .field{margin-bottom:16px;}
-  .field label{
-    display:block; font-family:'IBM Plex Mono',monospace; font-size:11.5px;
-    letter-spacing:0.08em; text-transform:uppercase; color:rgba(243,237,224,0.55); margin-bottom:7px;
-  }
-  .field input, .field textarea{
-    width:100%; background:var(--ink-2); border:1px solid var(--line-strong);
-    color:var(--paper); border-radius:4px; padding:12px 14px;
-    font-family:'IBM Plex Sans',sans-serif; font-size:14.5px; outline:none;
-  }
-  .field input:focus, .field textarea:focus{border-color:var(--gold);}
-  .rti-output{
-    background:var(--paper); color:var(--ink); border-radius:4px;
-    padding:28px 26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px;
-    line-height:1.75; white-space:pre-wrap; min-height:280px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.35);
-  }
-  .download-btn{
-    margin-top:14px; background:transparent; color:var(--gold); border:1px solid var(--gold-dim);
-    padding:10px 18px; border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:12px;
-    letter-spacing:0.05em; cursor:pointer;
-  }
-  .download-btn:hover{background:rgba(217,164,65,0.1);}
+.result-wrap{min-width:0}
+.result-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3px 10px;
+}
+.panel-label{font-size:11px;font-weight:800;color:var(--muted-2);text-transform:uppercase;letter-spacing:.09em}
+.result-meta{font-size:11px;color:var(--muted-2)}
 
-  footer{
-    padding:28px clamp(20px,5vw,64px) 40px;
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:rgba(243,237,224,0.35);
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
-  }
+.result-card{min-height:480px;overflow:hidden}
+.result-empty,.no-match{
+  min-height:480px;display:grid;place-items:center;text-align:center;padding:40px;
+  align-content:center;color:var(--muted);
+}
+.empty-icon,.no-match-icon{
+  width:62px;height:62px;border-radius:20px;background:var(--brand-soft);
+  color:var(--brand);display:grid;place-items:center;font-size:25px;margin-bottom:15px;
+}
+.result-empty h3,.no-match h3{margin:0;color:var(--ink);font:800 20px Manrope,sans-serif}
+.result-empty p,.no-match p{max-width:430px;font-size:13px;margin:8px 0 18px}
+.empty-tip{
+  padding:10px 13px;border-radius:11px;background:#faf8f1;
+  color:#766a52;font-size:11px;text-align:left;
+}
+.empty-tip span{font-weight:800;color:#a77b20;margin-right:5px}
+
+.result-header{
+  padding:17px 22px;display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--line);background:#fbfcfb;
+}
+.result-kicker{font-size:11px;font-weight:800;color:var(--brand);text-transform:uppercase;letter-spacing:.08em}
+.case-id{font:600 10px ui-monospace,monospace;color:var(--muted-2);margin-top:4px}
+.confidence{
+  display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;
+  background:#e8f5ef;color:var(--brand);font-size:10px;font-weight:800;
+}
+.confidence-dot{width:6px;height:6px;background:#31a275;border-radius:50%;box-shadow:0 0 0 4px #d5eee3}
+.result-main{padding:26px 25px 24px}
+.result-title-row{display:flex;gap:14px;align-items:flex-start}
+.law-icon{
+  flex:0 0 45px;height:45px;border-radius:14px;background:var(--brand);
+  color:white;display:grid;place-items:center;font-size:19px;
+}
+.result-title-row h2{margin:0;font:800 24px/1.15 Manrope,sans-serif;letter-spacing:-.04em}
+.law-ref{margin:6px 0 0;color:#9a7428;font-size:11px;font-weight:700}
+.guidance-block{margin-top:27px}
+.block-title{
+  display:flex;align-items:center;gap:9px;font-size:11px;font-weight:800;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:11px;
+}
+.block-title span{
+  width:25px;height:25px;border-radius:8px;background:var(--surface-2);
+  display:grid;place-items:center;color:var(--brand);font-size:9px;
+}
+.guidance-list{margin:0;padding:0;list-style:none}
+.guidance-list li{
+  position:relative;padding-left:19px;margin-bottom:8px;font-size:13px;color:#46564f;
+}
+.guidance-list li::before{content:"";position:absolute;left:1px;top:8px;width:6px;height:6px;border-radius:50%;background:#83a898}
+.steps-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.steps-list li{
+  display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;
+  padding:10px 11px;border:1px solid #e7ebe8;border-radius:11px;background:#fcfdfc;
+  color:#46564f;font-size:13px;
+}
+.step-number{
+  width:25px;height:25px;border-radius:8px;background:var(--accent-soft);
+  color:#9b6d15;display:grid;place-items:center;font-size:10px;font-weight:800;
+}
+.result-actions{display:flex;gap:9px;margin-top:18px}
+.secondary-btn{
+  border:1px solid var(--line);background:white;color:var(--ink);
+  border-radius:10px;padding:9px 13px;font-size:11px;font-weight:800;
+}
+.secondary-btn:hover{border-color:#9bbcac;color:var(--brand)}
+.result-note{
+  margin-top:18px;padding-top:14px;border-top:1px solid var(--line);
+  color:#89928e;font-size:10.5px;line-height:1.55;
+}
+.result-note strong{color:#6c7772}
+
+.suggestion-row{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.suggestion{border:1px solid var(--line);background:white;border-radius:9px;padding:8px 10px;font-size:11px;color:var(--muted);font-weight:700}
+.suggestion:hover{color:var(--brand);border-color:#a8cdbf}
+
+.result-visible .result-card{animation:resultIn .45s ease both}
+
+.rti-section{
+  padding:70px 0;border-top:1px solid var(--line);
+  background:linear-gradient(180deg,transparent,#eef4ef 100%);
+}
+.rti-grid{display:grid;grid-template-columns:.88fr 1.12fr;gap:22px}
+.rti-info{
+  padding:30px 0;
+}
+.rti-info h2{font:800 38px/1.08 Manrope,sans-serif;letter-spacing:-.05em;margin:0 0 13px}
+.rti-info h2 span{color:var(--brand)}
+.rti-info p{color:var(--muted);font-size:14px;max-width:500px}
+.rti-points{display:grid;gap:10px;margin-top:22px}
+.rti-point{display:flex;gap:10px;align-items:center;font-size:12px;color:#4f5d57}
+.rti-point i{
+  width:27px;height:27px;border-radius:9px;background:white;border:1px solid var(--line);
+  display:grid;place-items:center;color:var(--brand);font-style:normal;font-weight:800;
+}
+.rti-form,.rti-result{
+  background:white;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);padding:24px;
+}
+.form-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.form-head strong{font:800 18px Manrope,sans-serif}
+.progress{
+  height:4px;background:#e7ece8;border-radius:10px;overflow:hidden;margin-bottom:19px
+}
+.progress span{display:block;height:100%;width:0;background:var(--brand);transition:.3s ease}
+.field{margin-bottom:13px}
+.field label{display:flex;justify-content:space-between;gap:10px;margin-bottom:6px;font-size:11px;font-weight:800;color:#55635d}
+.optional{color:#a0aaa5;font-weight:600}
+.field input,.field textarea{
+  width:100%;border:1px solid var(--line);background:#fbfcfb;border-radius:11px;
+  padding:11px 12px;color:var(--ink);font-size:13px;outline:0;transition:.18s;
+}
+.field textarea{resize:vertical;min-height:100px}
+.field input:focus,.field textarea:focus{border-color:#82b7a5;background:white;box-shadow:0 0 0 4px rgba(23,107,85,.06)}
+.rti-actions{display:flex;gap:9px;align-items:center}
+.example-rti{
+  border:0;background:transparent;color:var(--brand);font-size:11px;font-weight:800;padding:8px;
+}
+.rti-result{min-height:100%;display:flex;flex-direction:column}
+.rti-result.ready{border-color:#bcd9cc}
+.rti-result-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.rti-result-head strong{font:800 17px Manrope,sans-serif}
+.rti-badge{font-size:9px;font-weight:800;text-transform:uppercase;color:var(--brand);background:var(--brand-soft);padding:6px 8px;border-radius:999px}
+.rti-output{
+  flex:1;min-height:330px;background:#f8faf8;border:1px solid #e5eae6;border-radius:12px;
+  padding:16px;white-space:pre-wrap;overflow:auto;color:#485650;
+  font:12px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+.rti-actions-bottom{display:flex;gap:9px;margin-top:11px}
+.rti-actions-bottom button{flex:1}
+
+footer{
+  border-top:1px solid var(--line);padding:25px 0 35px;color:var(--muted-2);
+  font-size:11px;
+}
+.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-brand{font-weight:800;color:var(--ink)}
+.footer-note{max-width:700px}
+
+.toast{
+  position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);
+  background:var(--ink);color:white;padding:11px 15px;border-radius:11px;
+  font-size:12px;font-weight:700;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:.25s;z-index:100;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.shake{animation:shake .4s ease}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+@keyframes resultIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+@media(max-width:1000px){
+  .topic-grid{grid-template-columns:repeat(3,1fr)}
+  .hero{grid-template-columns:1fr;gap:35px}
+  .hero-visual{min-height:280px}
+  .tool{grid-template-columns:1fr}
+  .rti-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .container,.nav{width:min(var(--max),calc(100% - 28px))}
+  .nav{min-height:64px}
+  .nav-links{display:none}
+  .nav-cta{padding:8px 10px}
+  .hero{padding:50px 0 35px}
+  .hero h1{font-size:43px}
+  .hero-copy{font-size:16px}
+  .hero-visual{min-height:235px}
+  .hero-orbit{width:245px}
+  .orbit-center{width:85px;height:85px;border-radius:25px;font-size:25px}
+  .float-card{padding:9px 10px;font-size:10px}
+  .fc1{left:0}.fc2{right:0}.fc3{left:2%}
+  .section{padding-bottom:50px}
+  .section-head{display:block}
+  .section-link{display:inline-block;margin-top:10px}
+  .topic-grid{grid-template-columns:repeat(2,1fr)}
+  .topic-card{min-height:105px}
+  .search-card,.rti-form,.rti-result{padding:18px}
+  .result-main{padding:20px 18px}
+  .result-header{padding:14px 17px}
+  .result-title-row h2{font-size:20px}
+  .keyboard{display:none}
+  .search-actions{display:block}
+  .primary-btn{width:100%}
+  .rti-info h2{font-size:32px}
+  .rti-actions{align-items:stretch;flex-direction:column}
+  .rti-actions .primary-btn{width:100%}
+}
+@media(max-width:430px){
+  .topic-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .topic-card{padding:13px}
+  .topic-icon{margin-bottom:10px}
+  .hero-proof{gap:10px;display:grid}
+  .float-card strong{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
-<body>
 
-<header>
-  <div class="brand">Adhikaar<span>.</span></div>
-  <nav>Tenant · Consumer · RTI — Plain Language Rights Navigator</nav>
+<body>
+<header class="topbar">
+  <nav class="nav" aria-label="Primary navigation">
+    <a href="#" class="brand" aria-label="Adhikaar home">
+      <span class="logo" aria-hidden="true"></span>
+      Adhikaar<span class="brand-dot">.</span>
+    </a>
+    <div class="nav-links">
+      <a href="#rights">Find my rights</a>
+      <a href="#rti">RTI generator</a>
+      <a href="#about">About</a>
+    </div>
+    <a class="nav-cta" href="#rights">Get help →</a>
+  </nav>
 </header>
 
 <main>
-
-  <section class="hero">
+  <section class="hero container">
     <div>
-      <div class="eyebrow">Civic &amp; Legal Empowerment — Demo Build</div>
-      <h1>Aapka masla,<br><em>aapki bhasha</em>, aapke rights.</h1>
-      <p>Type your problem the way you'd say it to a friend. No legal jargon needed — we match it to the relevant Indian law and tell you exactly what to do next.</p>
-    </div>
-    <div class="hero-note">
-      Works fully offline. No external APIs, no live data feeds — everything below runs from a static rights knowledge base loaded directly in this page.
-    </div>
-  </section>
-
-  <section class="tool">
-    <div>
-      <div class="panel-label">Describe your problem</div>
-      <div class="category-row" id="categoryRow">
-        <button class="chip active" data-cat="all">All</button>
-        <button class="chip" data-cat="tenant">Tenant</button>
-        <button class="chip" data-cat="consumer">Consumer</button>
-        <button class="chip" data-cat="rti">RTI / Govt Info</button>
-        <button class="chip" data-cat="workplace">Workplace</button>
-        <button class="chip" data-cat="police">Police / FIR</button>
-        <button class="chip" data-cat="property">Property / Land</button>
+      <span class="eyebrow">Everyday rights, made simple</span>
+      <h1>Know your rights.<br><span>Know your next step.</span></h1>
+      <p class="hero-copy">
+        Something went wrong with your landlord, a seller, your workplace or a government office?
+        Tell Adhikaar what happened in your own words. We'll turn it into clear, practical guidance.
+      </p>
+      <div class="hero-proof">
+        <span>✓ <b>Plain language</b></span>
+        <span>✓ English + Hindi + Hinglish</span>
+        <span>✓ No legal jargon</span>
       </div>
-      <textarea id="queryInput" placeholder="e.g. Mera landlord security deposit wapas nahi de raha hai, 2 mahine ho gaye..."></textarea>
-      <div class="examples">
-        Try:
-        <button data-ex="Landlord is not returning my security deposit even after 2 months of vacating">Deposit not returned</button>
-        <button data-ex="I received an eviction notice with no proper reason or notice period">Sudden eviction</button>
-        <button data-ex="I bought a phone online and it arrived damaged, seller refuses refund">Damaged product, no refund</button>
-        <button data-ex="I want to know why my ration card application was rejected by the government office">RTI on rejected application</button>
-      </div>
-      <button class="submit-btn" id="submitBtn">Find My Rights →</button>
     </div>
-
-    <div>
-      <div class="panel-label">Your case file</div>
-      <div class="case-file" id="caseFile">
-        <div class="case-file-empty">
-          <span>◌ Waiting for input</span>
-          <span>Your matched rights, relevant law, and next steps will appear here as a case file.</span>
-        </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-orbit">
+        <div class="orbit-center">अधि.</div>
+        <div class="float-card fc1"><strong>✓</strong> Know your rights</div>
+        <div class="float-card fc2"><strong>→</strong> Next steps</div>
+        <div class="float-card fc3"><strong>₹</strong> Everyday issues</div>
       </div>
     </div>
   </section>
 
-  <section class="rti">
-    <div class="panel-label">Draft an RTI application</div>
-    <div style="font-size:15px; color:rgba(243,237,224,0.7); max-width:60ch; margin-top:6px;">
-      Fill in the basics in plain language — we'll format it into a proper RTI application under Section 6(1) of the RTI Act, 2005, ready to submit or download.
-    </div>
-    <div class="rti-grid">
+  <section class="section container" id="rights">
+    <div class="section-head">
       <div>
-        <div class="field">
-          <label>Department / Public Authority</label>
-          <input id="rtiDept" type="text" placeholder="e.g. Municipal Corporation of Mathura">
-        </div>
-        <div class="field">
-          <label>Your name</label>
-          <input id="rtiName" type="text" placeholder="e.g. Rohit Sharma">
-        </div>
-        <div class="field">
-          <label>Your address</label>
-          <input id="rtiAddress" type="text" placeholder="e.g. 12, Krishna Nagar, Mathura, UP - 281001">
-        </div>
-        <div class="field">
-          <label>What do you want to know? (plain language)</label>
-          <textarea id="rtiQuestion" rows="4" placeholder="e.g. Why was my ration card application rejected and what is the current status of it?"></textarea>
-        </div>
-        <button class="submit-btn" id="rtiBtn">Generate Application</button>
+        <h2>What can we help with?</h2>
+        <p>Pick a topic or describe your situation below.</p>
       </div>
-      <div>
-        <div class="rti-output" id="rtiOutput">Your formatted RTI application will appear here once you fill the form and click Generate.</div>
-        <button class="download-btn" id="rtiDownload">↓ Download as .txt</button>
+      <a class="section-link" href="#searchBox">Describe a problem →</a>
+    </div>
+
+    <div class="topic-grid">
+      <button class="topic-card" data-cat="tenant">
+        <span class="topic-icon">⌂</span><strong>Rent & Landlord</strong><small>Deposit, eviction, repairs</small>
+      </button>
+      <button class="topic-card" data-cat="consumer">
+        <span class="topic-icon">🛍</span><strong>Consumer</strong><small>Refunds, products, billing</small>
+      </button>
+      <button class="topic-card" data-cat="rti">
+        <span class="topic-icon">▤</span><strong>Govt & RTI</strong><small>Information, applications</small>
+      </button>
+      <button class="topic-card" data-cat="workplace">
+        <span class="topic-icon">▥</span><strong>Workplace</strong><small>Salary, termination</small>
+      </button>
+      <button class="topic-card" data-cat="police">
+        <span class="topic-icon">⚖</span><strong>Police / FIR</strong><small>Theft, complaints</small>
+      </button>
+      <button class="topic-card" data-cat="property">
+        <span class="topic-icon">⌖</span><strong>Property / Land</strong><small>Encroachment, possession</small>
+      </button>
+    </div>
+  </section>
+
+  <section class="tool-wrap container">
+    <div class="tool">
+      <div class="search-card" id="searchBox">
+        <div class="card-top">
+          <div>
+            <h2 class="card-title">Tell us what happened</h2>
+            <p class="card-sub">Write like you're explaining it to a friend.</p>
+          </div>
+          <span class="status-pill" id="activeTopic">All topics</span>
+        </div>
+
+        <div class="chips" id="categoryRow" aria-label="Problem categories">
+          <button class="chip active" data-cat="all">All</button>
+          <button class="chip" data-cat="tenant">Rent</button>
+          <button class="chip" data-cat="consumer">Consumer</button>
+          <button class="chip" data-cat="rti">RTI / Govt</button>
+          <button class="chip" data-cat="workplace">Workplace</button>
+          <button class="chip" data-cat="police">Police</button>
+          <button class="chip" data-cat="property">Property</button>
+        </div>
+
+        <div class="search-box">
+          <textarea id="queryInput" maxlength="600"
+            aria-label="Describe your problem"
+            placeholder="Example: Mera landlord security deposit wapas nahi de raha hai, 2 mahine ho gaye..."></textarea>
+          <div class="search-footer">
+            <span class="search-meta" id="searchHint">You can write in English, Hindi or Hinglish.</span>
+            <div>
+              <span class="search-meta" id="charCount">0/600</span>
+              <button class="clear-btn" id="clearQuery" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-actions">
+          <button class="primary-btn" id="submitBtn" type="button">
+            <span class="btn-label">Get my guidance</span><span class="btn-arrow">→</span>
+          </button>
+          <span class="keyboard">Ctrl / ⌘ + Enter</span>
+        </div>
+
+        <div class="examples">
+          <div class="examples-label">Not sure what to write? Try one:</div>
+          <div class="example-list">
+            <button class="example-btn" data-ex="Landlord is not returning my security deposit even after 2 months of vacating">Deposit not returned</button>
+            <button class="example-btn" data-ex="I received an eviction notice with no proper reason or notice period">Sudden eviction</button>
+            <button class="example-btn" data-ex="I bought a phone online and it arrived damaged, seller refuses refund">Damaged product</button>
+            <button class="example-btn" data-ex="I want to know why my ration card application was rejected by the government office">RTI question</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-wrap" id="resultSection">
+        <div class="result-top">
+          <span class="panel-label">Your guidance</span>
+          <span class="result-meta" id="resultMeta">Waiting for your question</span>
+        </div>
+        <div class="result-card" id="caseFile" aria-live="polite"></div>
       </div>
     </div>
   </section>
 
+  <section class="rti-section" id="rti">
+    <div class="container">
+      <div class="rti-grid">
+        <div class="rti-info">
+          <span class="eyebrow">RTI made easier</span>
+          <h2>Turn a question into a proper <span>RTI application.</span></h2>
+          <p>
+            Don't know how to format an RTI request? Give us the department, your details and what
+            you want to know. Adhikaar creates a simple application you can review, copy or download.
+          </p>
+          <div class="rti-points">
+            <div class="rti-point"><i>1</i> Explain what information you need</div>
+            <div class="rti-point"><i>2</i> Generate a formatted application</div>
+            <div class="rti-point"><i>3</i> Review before you submit</div>
+          </div>
+        </div>
+
+        <div class="rti-form">
+          <div class="form-head"><strong>Draft your RTI</strong><span class="status-pill">Section 6(1)</span></div>
+          <div class="progress" aria-label="Form completion"><span id="rtiProgress"></span></div>
+
+          <div class="field">
+            <label for="rtiDept">Department / Public Authority</label>
+            <input id="rtiDept" type="text" placeholder="e.g. Municipal Corporation of Mathura">
+          </div>
+          <div class="field">
+            <label for="rtiName">Your name</label>
+            <input id="rtiName" type="text" placeholder="e.g. Rohit Sharma">
+          </div>
+          <div class="field">
+            <label for="rtiAddress">Your address</label>
+            <input id="rtiAddress" type="text" placeholder="e.g. 12, Krishna Nagar, Mathura, UP">
+          </div>
+          <div class="field">
+            <label for="rtiQuestion">What do you want to know?</label>
+            <textarea id="rtiQuestion" placeholder="e.g. Why was my ration card application rejected and what is its current status?"></textarea>
+          </div>
+
+          <div class="rti-actions">
+            <button class="primary-btn" id="rtiBtn" type="button">Generate application →</button>
+            <button class="example-rti" id="useRtiExample" type="button">Use an example</button>
+          </div>
+        </div>
+
+        <div class="rti-result" id="rtiResult">
+          <div class="rti-result-head">
+            <strong>Your application</strong><span class="rti-badge">Draft</span>
+          </div>
+          <div class="rti-output" id="rtiOutput">Your formatted RTI application will appear here once you fill the form and click “Generate application”.</div>
+          <div class="rti-actions-bottom">
+            <button class="secondary-btn" id="rtiCopy" type="button">Copy</button>
+            <button class="secondary-btn" id="rtiDownload" type="button">Download .txt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer>
-  <span>Adhikaar — student demo project. Not a substitute for professional legal advice.</span>
-  <span>Knowledge base: Tenant law (model act) · Consumer Protection Act 2019 · RTI Act 2005 · Shops &amp; Establishments Act</span>
+<footer id="about">
+  <div class="container footer-row">
+    <span class="footer-brand">Adhikaar.</span>
+    <span class="footer-note">A student project for civic and legal awareness. Guidance is informational and is not a substitute for professional legal advice. Verify current rules, fees and timelines before filing.</span>
+  </div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-// ---------- STATIC KNOWLEDGE BASE (no APIs) ----------
 const KB = [
   {
     cat:"tenant",
@@ -495,21 +810,32 @@ const KB = [
 
 let activeCat = "all";
 
-document.getElementById('categoryRow').addEventListener('click', (e)=>{
-  if(e.target.classList.contains('chip')){
-    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-    e.target.classList.add('active');
-    activeCat = e.target.dataset.cat;
-  }
-});
+const categoryMeta = {
+  all: { label: "All", icon: "✦" },
+  tenant: { label: "Rent & Landlord", icon: "⌂" },
+  consumer: { label: "Consumer", icon: "🛍" },
+  rti: { label: "RTI / Govt", icon: "▤" },
+  workplace: { label: "Workplace", icon: "▥" },
+  police: { label: "Police / FIR", icon: "⚖" },
+  property: { label: "Property / Land", icon: "⌖" }
+};
 
-document.querySelectorAll('.examples button').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.getElementById('queryInput').value = btn.dataset.ex;
-  });
-});
+const categoryRow = document.getElementById("categoryRow");
+const queryInput = document.getElementById("queryInput");
+const submitBtn = document.getElementById("submitBtn");
+const caseFile = document.getElementById("caseFile");
+const resultSection = document.getElementById("resultSection");
+const resultMeta = document.getElementById("resultMeta");
+const charCount = document.getElementById("charCount");
+const searchHint = document.getElementById("searchHint");
 
-function normalize(str){
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  }[char]));
+}
+
+function normalize(str) {
   return str.toLowerCase()
     .replace(/\bnhi\b/g, "nahi")
     .replace(/\brha\b/g, "raha")
@@ -520,77 +846,265 @@ function normalize(str){
     .replace(/\bkro\b/g, "karo");
 }
 
-function matchQuery(query){
+function matchQuery(query) {
   const q = normalize(query);
   let best = null, bestScore = 0;
-  KB.forEach(entry=>{
-    if(activeCat !== "all" && entry.cat !== activeCat) return;
+
+  KB.forEach(entry => {
+    if (activeCat !== "all" && entry.cat !== activeCat) return;
     let score = 0;
-    entry.keywords.forEach(k=>{
+
+    entry.keywords.forEach(k => {
       const nk = normalize(k);
-      if(q.includes(nk)) score += nk.split(" ").length; // longer phrase matches score higher
+      if (q.includes(nk)) score += nk.split(" ").length;
     });
-    // fallback: single strong-word overlap (helps short casual queries)
-    if(score === 0){
+
+    if (score === 0) {
       const qWords = q.split(/\s+/);
-      entry.keywords.forEach(k=>{
+      entry.keywords.forEach(k => {
         const nk = normalize(k);
-        if(nk.split(" ").length === 1 && qWords.includes(nk)) score += 0.5;
+        if (nk.split(" ").length === 1 && qWords.includes(nk)) score += 0.5;
       });
     }
-    if(score > bestScore){ bestScore = score; best = entry; }
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
+    }
   });
+
   return bestScore > 0 ? best : null;
 }
 
-function renderResult(entry, query){
-  const el = document.getElementById('caseFile');
-  if(!entry){
-    el.innerHTML = `<div class="case-file-empty" style="color:rgba(16,29,51,0.55);">
-      <span>◌ No confident match found</span>
-      <span>Try adding more detail — e.g. mention "deposit", "eviction", "refund", "RTI", or select a category filter above.</span>
-    </div>`;
-    return;
-  }
-  const caseId = "AK-" + Math.floor(1000 + Math.random()*9000);
-  el.innerHTML = `
-    <div class="case-file-header">
-      <div class="case-id">CASE FILE / ${caseId}</div>
-      <div class="stamp">RIGHTS MATCHED</div>
-    </div>
-    <div class="case-body">
-      <div class="case-title">${entry.title}</div>
-      <div class="case-law">${entry.law}</div>
-      <div class="case-section-label">What this means</div>
-      <ul>${entry.facts.map(f=>`<li>${f}</li>`).join("")}</ul>
-      <div class="case-section-label">What you can do</div>
-      <ul>${entry.steps.map(s=>`<li>${s}</li>`).join("")}</ul>
-      <div class="gen-note">Generated from a static rights knowledge base — verify current fees/timelines on the relevant state portal before filing. This is guidance, not legal advice.</div>
-    </div>
-  `;
+function categoryLabel(cat) {
+  return categoryMeta[cat]?.label || cat;
 }
 
-document.getElementById('submitBtn').addEventListener('click', ()=>{
-  const query = document.getElementById('queryInput').value.trim();
-  if(!query){
-    document.getElementById('queryInput').focus();
+function renderEmpty(message = "Your guidance will appear here.") {
+  caseFile.innerHTML = `
+    <div class="result-empty">
+      <div class="empty-icon">✦</div>
+      <h3>Start with your situation</h3>
+      <p>${escapeHTML(message)}</p>
+      <div class="empty-tip"><span>Tip</span> You don't need legal words. Just explain what happened.</div>
+    </div>
+  `;
+  resultMeta.textContent = "Waiting for your question";
+}
+
+function renderResult(entry, query) {
+  if (!entry) {
+    caseFile.innerHTML = `
+      <div class="no-match">
+        <div class="no-match-icon">?</div>
+        <h3>We couldn't confidently match that</h3>
+        <p>Try describing what happened with a little more detail, or choose a topic above.</p>
+        <div class="suggestion-row">
+          <button class="suggestion" data-fill="Mera landlord security deposit wapas nahi de raha">Security deposit</button>
+          <button class="suggestion" data-fill="Product damaged hai aur seller refund nahi de raha">Refund</button>
+          <button class="suggestion" data-fill="Mujhe government office se information chahiye">Government information</button>
+        </div>
+      </div>
+    `;
+    resultMeta.textContent = "No confident match";
+    bindSuggestions();
     return;
   }
-  const match = matchQuery(query);
-  renderResult(match, query);
+
+  const caseId = "AK-" + Math.floor(1000 + Math.random() * 9000);
+  caseFile.innerHTML = `
+    <article class="result-card-inner">
+      <header class="result-header">
+        <div>
+          <span class="result-kicker">${escapeHTML(categoryLabel(entry.cat))}</span>
+          <div class="case-id">CASE ${caseId}</div>
+        </div>
+        <span class="confidence"><span class="confidence-dot"></span> Matched</span>
+      </header>
+
+      <div class="result-main">
+        <div class="result-title-row">
+          <div class="law-icon">⚖</div>
+          <div>
+            <h2>${escapeHTML(entry.title)}</h2>
+            <p class="law-ref">${escapeHTML(entry.law)}</p>
+          </div>
+        </div>
+
+        <section class="guidance-block">
+          <div class="block-title"><span>01</span> What this means</div>
+          <ul class="guidance-list">
+            ${entry.facts.map(f => `<li>${escapeHTML(f)}</li>`).join("")}
+          </ul>
+        </section>
+
+        <section class="guidance-block next-step-block">
+          <div class="block-title"><span>02</span> What you can do now</div>
+          <ol class="steps-list">
+            ${entry.steps.map((s, i) => `<li><span class="step-number">${i + 1}</span><span>${escapeHTML(s)}</span></li>`).join("")}
+          </ol>
+        </section>
+
+        <div class="result-actions">
+          <button class="secondary-btn" id="copyGuidance">Copy guidance</button>
+          <button class="secondary-btn" id="shareGuidance">Share</button>
+        </div>
+
+        <div class="result-note">
+          <strong>Important:</strong> This is plain-language guidance from Adhikaar's static knowledge base, not professional legal advice. Rules, fees and timelines can vary by state and situation.
+        </div>
+      </div>
+    </article>
+  `;
+
+  resultMeta.textContent = `Matched: ${categoryLabel(entry.cat)}`;
+  const guidanceText = [
+    entry.title,
+    entry.law,
+    "",
+    "What this means:",
+    ...entry.facts.map(f => "• " + f),
+    "",
+    "What you can do now:",
+    ...entry.steps.map((s, i) => `${i + 1}. ${s}`),
+    "",
+    "Adhikaar guidance — verify current rules before filing."
+  ].join("\n");
+
+  document.getElementById("copyGuidance").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(guidanceText);
+      toast("Guidance copied");
+    } catch {
+      toast("Copy is unavailable in this browser");
+    }
+  });
+
+  document.getElementById("shareGuidance").addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: entry.title, text: guidanceText });
+      } catch {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(guidanceText);
+        toast("Guidance copied — ready to share");
+      } catch {
+        toast("Sharing is unavailable here");
+      }
+    }
+  });
+
+  resultSection.classList.add("result-visible");
+}
+
+function bindSuggestions() {
+  document.querySelectorAll(".suggestion").forEach(btn => {
+    btn.addEventListener("click", () => {
+      queryInput.value = btn.dataset.fill;
+      updateCount();
+      queryInput.focus();
+      submitQuery();
+    });
+  });
+}
+
+function submitQuery() {
+  const query = queryInput.value.trim();
+  if (!query) {
+    queryInput.focus();
+    queryInput.classList.add("shake");
+    setTimeout(() => queryInput.classList.remove("shake"), 450);
+    toast("Tell us what happened first");
+    return;
+  }
+
+  submitBtn.classList.add("loading");
+  submitBtn.querySelector(".btn-label").textContent = "Finding guidance…";
+
+  setTimeout(() => {
+    const match = matchQuery(query);
+    renderResult(match, query);
+    submitBtn.classList.remove("loading");
+    submitBtn.querySelector(".btn-label").textContent = "Get my guidance";
+    resultSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, 420);
+}
+
+function updateCount() {
+  const count = queryInput.value.length;
+  charCount.textContent = `${count}/600`;
+  searchHint.textContent = count > 520 ? "Keep it short and focused." : "You can write in English, Hindi or Hinglish.";
+}
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+categoryRow.addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (!chip) return;
+  document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+  chip.classList.add("active");
+  activeCat = chip.dataset.cat;
+  const meta = categoryMeta[activeCat];
+  document.getElementById("activeTopic").textContent = activeCat === "all" ? "All topics" : meta.label;
 });
 
-document.getElementById('queryInput').addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' && e.ctrlKey){ document.getElementById('submitBtn').click(); }
+document.querySelectorAll("[data-ex]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    queryInput.value = btn.dataset.ex;
+    updateCount();
+    queryInput.focus();
+    document.getElementById("searchBox").classList.add("focused");
+    setTimeout(() => document.getElementById("searchBox").classList.remove("focused"), 500);
+  });
 });
 
-// ---------- RTI GENERATOR ----------
-document.getElementById('rtiBtn').addEventListener('click', ()=>{
-  const dept = document.getElementById('rtiDept').value.trim() || "[Department / Public Authority]";
-  const name = document.getElementById('rtiName').value.trim() || "[Your Name]";
-  const address = document.getElementById('rtiAddress').value.trim() || "[Your Address]";
-  const question = document.getElementById('rtiQuestion').value.trim() || "[Your question here]";
-  const today = new Date().toLocaleDateString('en-IN', {day:'numeric', month:'long', year:'numeric'});
+queryInput.addEventListener("input", updateCount);
+queryInput.addEventListener("keydown", e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === "Enter") submitQuery();
+});
+
+submitBtn.addEventListener("click", submitQuery);
+
+document.getElementById("clearQuery").addEventListener("click", () => {
+  queryInput.value = "";
+  updateCount();
+  queryInput.focus();
+});
+
+document.querySelectorAll(".topic-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const cat = card.dataset.cat;
+    const chip = document.querySelector(`.chip[data-cat="${cat}"]`);
+    if (chip) chip.click();
+    document.getElementById("searchBox").scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(() => queryInput.focus(), 450);
+  });
+});
+
+// RTI generator
+const rtiFields = ["rtiDept", "rtiName", "rtiAddress", "rtiQuestion"];
+const rtiProgress = document.getElementById("rtiProgress");
+
+function updateRTIProgress() {
+  const filled = rtiFields.filter(id => document.getElementById(id).value.trim()).length;
+  rtiProgress.style.width = `${(filled / rtiFields.length) * 100}%`;
+}
+
+rtiFields.forEach(id => document.getElementById(id).addEventListener("input", updateRTIProgress));
+
+document.getElementById("rtiBtn").addEventListener("click", () => {
+  const dept = document.getElementById("rtiDept").value.trim() || "[Department / Public Authority]";
+  const name = document.getElementById("rtiName").value.trim() || "[Your Name]";
+  const address = document.getElementById("rtiAddress").value.trim() || "[Your Address]";
+  const question = document.getElementById("rtiQuestion").value.trim() || "[Your question here]";
+  const today = new Date().toLocaleDateString("en-IN", { day:"numeric", month:"long", year:"numeric" });
 
   const draft =
 `To,
@@ -618,20 +1132,61 @@ ${name}
 Date: ${today}
 Place: __________________`;
 
-  document.getElementById('rtiOutput').textContent = draft;
+  document.getElementById("rtiOutput").textContent = draft;
+  document.getElementById("rtiResult").classList.add("ready");
+  document.getElementById("rtiResult").scrollIntoView({ behavior:"smooth", block:"nearest" });
 });
 
-document.getElementById('rtiDownload').addEventListener('click', ()=>{
-  const text = document.getElementById('rtiOutput').textContent;
-  if(!text || text.startsWith("Your formatted")) return;
-  const blob = new Blob([text], {type:'text/plain'});
+document.getElementById("rtiDownload").addEventListener("click", () => {
+  const text = document.getElementById("rtiOutput").textContent;
+  if (!text || text.startsWith("Your formatted")) {
+    toast("Generate your application first");
+    return;
+  }
+  const blob = new Blob([text], { type:"text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'RTI_Application.txt';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Adhikaar_RTI_Application.txt";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
   URL.revokeObjectURL(url);
+  toast("RTI application downloaded");
 });
-</script>
 
+document.getElementById("rtiCopy").addEventListener("click", async () => {
+  const text = document.getElementById("rtiOutput").textContent;
+  if (!text || text.startsWith("Your formatted")) {
+    toast("Generate your application first");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    toast("RTI application copied");
+  } catch {
+    toast("Copy is unavailable in this browser");
+  }
+});
+
+document.getElementById("useRtiExample").addEventListener("click", () => {
+  document.getElementById("rtiDept").value = "Municipal Corporation";
+  document.getElementById("rtiQuestion").value = "Why was my ration card application rejected and what is its current status?";
+  updateRTIProgress();
+  toast("Example added — edit it for your situation");
+});
+
+// Small accessibility helpers
+document.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("keydown", e => {
+    if (e.key === " " && btn.classList.contains("chip")) e.preventDefault();
+  });
+});
+
+updateCount();
+updateRTIProgress();
+renderEmpty();
+
+</script>
 </body>
 </html>
